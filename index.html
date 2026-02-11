@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比例と反比例：変数の相関と宇宙の法則 - 究極のアーカイブ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media', // デバイスのテーマ設定に自動追従
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Noto Serif JP"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+            line-height: 2.4; /* 行間を広げて読みやすく */
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .serif-text {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        /* Slide-out Panel Styles */
+        .quiz-panel {
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateX(100%);
+            box-shadow: -10px 0 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-panel.active {
+            transform: translateX(0);
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .glass-morphism {
+                background: rgba(15, 23, 42, 0.85);
+                border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+            }
+        }
+
+        .content-card {
+            border-radius: 1.5rem;
+            padding: 4rem;
+            margin-bottom: 5rem;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
+        }
+
+        .equation-box {
+            border-left: 6px solid #4f46e5;
+            background: linear-gradient(90deg, rgba(79, 70, 229, 0.05) 0%, transparent 100%);
+            padding: 3rem;
+            margin: 4rem 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            border-radius: 0 1rem 1rem 0;
+            font-family: 'Noto Serif JP', serif;
+            letter-spacing: 0.05em;
+            overflow-x: auto;
+        }
+
+        .chapter-title {
+            position: relative;
+            padding-bottom: 1.5rem;
+            margin-bottom: 3.5rem;
+            font-size: 2.25rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.3;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .chapter-title {
+                border-bottom: 1px solid #334155;
+            }
+        }
+
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 80px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 2px;
+        }
+
+        .sub-section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-top: 4.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            color: #312e81;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .sub-section-title {
+                color: #e0e7ff;
+            }
+        }
+
+        .sub-section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 28px;
+            background: #6366f1;
+            margin-right: 16px;
+            border-radius: 99px;
+        }
+
+        p { margin-bottom: 2.5rem; font-size: 1.125rem; text-align: justify; letter-spacing: 0.04em; color: #334155; }
+        
+        @media (prefers-color-scheme: dark) {
+            p { color: #94a3b8; }
+        }
+
+        .diagram-box {
+            border-radius: 2rem;
+            padding: 4rem 2rem;
+            margin: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+            overflow: hidden;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .diagram-box {
+                background-color: #0f172a;
+                border: 1px solid #1e293b;
+            }
+        }
+
+        .highlight-text {
+            background: linear-gradient(180deg, transparent 65%, #c7d2fe 65%);
+            font-weight: 700;
+            padding: 0 4px;
+            color: #1e1b4b;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .highlight-text {
+                background: linear-gradient(180deg, transparent 65%, #312e81 65%);
+                color: #e0e7ff;
+            }
+        }
+
+        /* Trivia Box Styling */
+        .trivia-box {
+            border-radius: 1.25rem;
+            padding: 2.5rem 3rem;
+            margin: 4rem 0;
+            position: relative;
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .trivia-box {
+                background-color: rgba(120, 53, 15, 0.1);
+                border: 1px solid rgba(180, 83, 9, 0.4);
+            }
+        }
+
+        .trivia-badge {
+            position: absolute;
+            top: -16px;
+            left: 32px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Quiz UI */
+        .quiz-input {
+            transition: all 0.2s ease;
+        }
+        .quiz-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+        .correct-answer {
+            background-color: #f0fdf4 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+            box-shadow: 0 0 0 1px #22c55e;
+        }
+        .incorrect-answer {
+            background-color: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+            box-shadow: 0 0 0 1px #ef4444;
+        }
+        
+        .feedback-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 2rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* KaTeX SVG fix */
+        foreignObject { overflow: visible; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Math formula specific styling */
+        .math-block {
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-200 dark:selection:bg-indigo-900">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-40 glass-morphism">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Ratio / Graph Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24">
+                     <path d="M3 3v18h18" />
+                     <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
+                     <circle cx="18.7" cy="8" r="2" />
+                     <circle cx="7" cy="14.3" r="2" />
+                </svg>
+                <span class="font-bold text-lg tracking-tight hidden sm:block">Archive: Ratio</span>
+            </div>
+            <button id="quizTrigger" class="group bg-slate-900 text-white dark:bg-indigo-600 dark:text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3 text-sm md:text-base border border-transparent hover:border-indigo-400">
+                <!-- Bootstrap Icon: pencil-square -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="transition-transform group-hover:rotate-12" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+                <span>無限演習ジェネレーター</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-24">
+        
+        <!-- Hero Section -->
+        <header class="text-center mb-32">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-300 text-xs font-bold uppercase tracking-widest mb-6">
+                The Symmetry of Variables
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black mb-10 tracking-tight leading-tight">
+                <span class="hero-gradient">比例と反比例</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 serif-text max-w-3xl mx-auto leading-loose">
+                一方が増えれば他方も増える「比例」、<br>
+                一方が増えれば他方は減る「反比例」。<br>
+                二つの変数が織りなす直線と曲線のダンスは、<br>
+                宇宙の物理法則から日常生活まで、世界を貫く最も基本的なリズムである。
+            </p>
+        </header>
+
+        <!-- Chapter 1: Essence -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第1章：二つの変数の関係性</h2>
+            <div class="serif-text">
+                <p>
+                    <strong>比例（Proportion）</strong>と<strong>反比例（Inverse Proportion）</strong>は、数学における「関数（Function）」の入り口である。これらは単なる数式の操作ではなく、ある量 $x$ が変化したとき、それに連動して別の量 $y$ がどのように変化するかという「関係性」を記述する言語である。
+                </p>
+
+                <p>
+                    比例は「共に歩む関係」だ。$x$ が2倍、3倍になれば、$y$ も同様に2倍、3倍になる。グラフに描けば、原点を通る真っ直ぐな直線となり、その傾きは一定である。対して反比例は「補い合う関係」だ。$x$ が2倍、3倍になると、$y$ は $\frac{1}{2}$、$\frac{1}{3}$ に縮小する。そのグラフは座標軸に決して触れることのない、優雅な双曲線を描く。
+                </p>
+
+                <div class="diagram-box">
+                    <h4 class="text-lg font-bold mb-12 text-slate-700 dark:text-slate-300 tracking-wider">直線と双曲線の対比</h4>
+                    
+                    <!-- Coordinate System Visualization -->
+                    <div class="relative w-full max-w-lg h-80 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 overflow-hidden shadow-inner">
+                        
+                        <!-- Axes -->
+                        <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-300 dark:bg-slate-600"></div> <!-- X-axis -->
+                        <div class="absolute top-0 left-1/2 w-0.5 h-full bg-slate-300 dark:bg-slate-600"></div> <!-- Y-axis -->
+                        
+                        <!-- Axis Labels with KaTeX -->
+                        <div class="absolute top-2 left-1/2 ml-2 text-xs font-bold text-slate-400">$ y $</div>
+                        <div class="absolute top-1/2 right-2 mt-2 text-xs font-bold text-slate-400">$ x $</div>
+                        <div class="absolute top-1/2 left-1/2 mt-1 ml-1 text-xs font-bold text-slate-400">$ 0 $</div>
+
+                        <!-- Proportional Line (Blue) -->
+                        <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <line x1="0" y1="100" x2="100" y2="0" stroke="#6366f1" stroke-width="3" stroke-dasharray="0" />
+                        </svg>
+                        <div class="absolute top-10 right-10 text-indigo-500 font-bold bg-white dark:bg-slate-900 px-1 rounded shadow-sm text-sm">比例 $y=ax$</div>
+
+                        <!-- Inverse Proportional Curve (Red) -->
+                        <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 200 200" fill="none">
+                            <path d="M 105 5 Q 110 95 195 100" stroke="#f43f5e" stroke-width="3" fill="none" />
+                            <path d="M 95 195 Q 90 105 5 100" stroke="#f43f5e" stroke-width="3" fill="none" opacity="0.3" /> <!-- Symmetry part -->
+                        </svg>
+                        <div class="absolute bottom-20 right-20 text-rose-500 font-bold bg-white dark:bg-slate-900 px-1 rounded shadow-sm text-sm">反比例 $y=\frac{a}{x}$</div>
+
+                    </div>
+
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-8 italic text-center max-w-lg">
+                        青い線は原点を通る「比例」のグラフ。<br>赤い曲線は軸に無限に近づく「反比例」の双曲線。
+                    </p>
+                </div>
+
+                <div class="equation-box text-slate-900 dark:text-slate-100 shadow-sm">
+                    $$ y = ax \quad \text{vs} \quad y = \frac{a}{x} $$
+                </div>
+
+                <h3 class="sub-section-title">定数 $a$ の意味：比例定数</h3>
+                <p>
+                    式の中に登場する $a$ は「比例定数」と呼ばれ、その関係性の性質を決定づけるDNAのような存在である。
+                    比例 $y=ax$ における $a$ は「変化の割合（傾き）」を表し、$x$ が1増えたときに $y$ がどれだけ増えるかを示す。
+                    一方、反比例 $y=\frac{a}{x}$ における $a$ は、変形すると $xy=a$ となることから、「二つの量の積（面積）」が常に一定であることを意味している。長方形の面積が決まっているときの、縦と横の長さの関係がまさにこれである。
+                </p>
+
+                <!-- Trivia 1 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：座標の発明とハエ
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        グラフを描くための「座標（Coordinate System）」を発明したのは、17世紀の哲学者ルネ・デカルトである。
+                        病弱で朝起きられなかった彼が、ベッドに寝転がりながら天井を這うハエを見て、「ハエの位置を特定するには、部屋の隅からの縦と横の距離を使えばいい」と閃いたという逸話がある。
+                        これにより、代数（数式）と幾何（図形）が統合され、解析幾何学が誕生した。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 1.5: Calculation (Expanded) -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">実践：式の決定と計算テクニック</h2>
+            <div class="serif-text">
+                <p>
+                    比例や反比例の問題で最も重要なのは、「$x$ と $y$ のペアから比例定数 $a$ を求め、式を完成させる」ことである。それぞれの性質を利用した、間違いのない計算手順を整理しよう。
+                </p>
+
+                <!-- Method 1: Proportion -->
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-2xl border border-indigo-100 dark:border-indigo-800 mb-10">
+                    <p class="font-bold text-indigo-900 dark:text-indigo-200 mb-4 flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">1</span>
+                        比例の攻略法：割り算で $a$ を出す
+                    </p>
+                    <div class="pl-4 border-l-2 border-indigo-200 dark:border-indigo-700 mb-6">
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                            $y$ が $x$ に比例するとき、その商 $y \div x$ は常に一定で、それが比例定数 $a$ になる。
+                        </p>
+                        <div class="math-block text-center font-bold text-xl my-4 text-indigo-700 dark:text-indigo-300">
+                            $$ a = \frac{y}{x} $$
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            例：$x=3$ のとき $y=12$ ならば、<br>
+                            $a = 12 \div 3 = 4$。<br>
+                            よって式は $y = 4x$ となる。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Method 2: Inverse Proportion -->
+                <div class="bg-rose-50 dark:bg-rose-900/20 p-8 rounded-2xl border border-rose-100 dark:border-rose-800 mb-8">
+                    <p class="font-bold text-rose-900 dark:text-rose-200 mb-4 flex items-center gap-2">
+                        <span class="bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">2</span>
+                        反比例の攻略法：掛け算で $a$ を出す
+                    </p>
+                    <div class="pl-4 border-l-2 border-rose-200 dark:border-rose-700">
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                            $y$ が $x$ に反比例するとき、その積 $x \times y$ は常に一定で、それが比例定数 $a$ になる。分数の計算を避けるためにも、この「積一定」の性質を使うのが鉄則だ。
+                        </p>
+                        <div class="math-block text-center font-bold text-xl my-4 text-rose-700 dark:text-rose-300">
+                            $$ a = x \times y $$
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            例：$x=4$ のとき $y=5$ ならば、<br>
+                            $a = 4 \times 5 = 20$。<br>
+                            よって式は $y = \frac{20}{x}$ となる。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Trivia 2 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：黄金比と比例
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        自然界で最も美しいとされる比率「黄金比（約1:1.618）」も、一種の比例関係である。
+                        植物の葉の生え方や、銀河の渦巻き、パルテノン神殿の形状など、マクロからミクロまで、宇宙は特定の比例定数に従って設計されているかのように見える。
+                        比例は単なる数式ではなく、美の基準でもあるのだ。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: History -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第2章：ピラミッドとタレスの知恵</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    比例の概念が人類史に明確に登場するのは、古代ギリシャの哲学者タレスの逸話である。彼はエジプトを訪れた際、巨大なピラミッドの高さを測るという難題に挑んだ。
+                    彼が使った道具は、なんと「一本の棒」だけであった。
+                </p>
+                
+                <h3 class="sub-section-title">影の比例関係</h3>
+                <p>
+                    タレスは「太陽の光は平行に降り注ぐ」という事実に着目した。
+                    彼は地面に棒を立て、その棒の影の長さが、棒自体の長さと等しくなる瞬間を待った。
+                    「今だ！」その瞬間、ピラミッドの影の長さもまた、ピラミッドの高さと等しくなっているはずである。
+                    実際には、任意の時刻において「棒の高さ : 棒の影 = ピラミッドの高さ : ピラミッドの影」という比例式が成り立つことを利用したとされる。
+                    これは相似な三角形の性質を用いた、幾何学と代数学の美しい融合であった。
+                </p>
+
+                <h3 class="sub-section-title">ボイルの法則と反比例</h3>
+                <p>
+                    一方、反比例の性質が科学的に重要視されたのは、17世紀のロバート・ボイルによる気体の研究である。
+                    彼は「温度が一定なら、気体の圧力と体積は反比例する（圧力を2倍にすれば、体積は半分に圧縮される）」ことを発見した。
+                    これをボイルの法則 ($PV = k$) と呼ぶ。目に見えない気体の振る舞いが、シンプルな反比例の数式で記述できるという事実は、科学者たちに大きな衝撃を与えた。
+                </p>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Logic -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第3章：関数という視点</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    比例 $y=ax$ や反比例 $y=\frac{a}{x}$ を学ぶことは、「関数（Function）」という概念への第一歩である。
+                    関数とは「入力 $x$ を入れると、決まったルールで変換され、出力 $y$ が出てくるブラックボックス」のことだ。
+                </p>
+
+                <h3 class="sub-section-title">変域という「枠」</h3>
+                <p>
+                    現実世界の現象を関数で表すとき、$x$ はどんな値でもとれるわけではない。
+                    例えば「プールの水を抜く」問題を反比例で考えるとき、$x$（時間）が負になることはないし、分母が0になることも許されない。
+                    このように、$x$ がとりうる値の範囲を「変域」と呼ぶ。グラフを描く際、変域を意識して実線と点線を使い分けることは、数学的な厳密さだけでなく、現実世界への理解度を示すバロメーターとなる。
+                </p>
+                
+                <h3 class="sub-section-title">比例の拡張：1次関数へ</h3>
+                <p>
+                    比例のグラフは必ず原点 $(0,0)$ を通るが、これを上下にずらしたものが「1次関数 ($y=ax+b$)」である。
+                    タクシーの料金メーターのように、初乗り運賃（切片 $b$）があり、そこから距離に応じて加算（比例部分 $ax$）される仕組みは、純粋な比例ではなく1次関数である。
+                    比例を理解することは、より複雑な関数を理解するための強固な土台となる。
+                </p>
+
+                <!-- Trivia 3 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：0で割ってはいけない理由
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        反比例の式 $y = \frac{a}{x}$ において、$x=0$ を代入することは数学最大のタブーである。
+                        グラフを見ても、双曲線は $y$ 軸（$x=0$ のライン）に無限に近づくが、決して触れることはない。
+                        もし $x=0$ を許してしまうと、「$1=2$」のような矛盾が導かれてしまい、数学の論理体系が崩壊してしまうからである。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: Modern World -->
+        <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+            <h2 class="chapter-title text-slate-900 dark:text-slate-100">第4章：世界を記述する相関関係</h2>
+            <div class="serif-text text-xl leading-relaxed">
+                <p>
+                    現代社会のテクノロジーやシステムは、無数の比例・反比例の関係で支えられている。意識していなくても、私たちは常にこれらの法則を利用している。
+                </p>
+
+                <h3 class="sub-section-title">アスペクト比と画像の拡大縮小</h3>
+                <p>
+                    スマートフォンやテレビの画面比率（アスペクト比）は、16:9 などの比例関係で保たれている。
+                    画像をリサイズする際、縦横の比率（$\frac{y}{x}$）を一定に保たないと、画像が歪んでしまう。
+                    これは「$y$ が $x$ に比例する」という性質を厳密に守ることで、視覚的な情報を正しく伝達している例である。
+                </p>
+
+                <h3 class="sub-section-title">歯車と反比例</h3>
+                <p>
+                    時計や自転車、自動車の変速機に使われる歯車（ギア）は、反比例の原理で動いている。
+                    噛み合っている2つの歯車において、「歯の数 $\times$ 回転数」は一定になる。
+                    つまり、歯の数が2倍ある大きな歯車は、回転数が半分になる。
+                    この反比例の法則を利用して、エンジンの高速回転をタイヤの適切な回転数とトルクに変換しているのだ。
+                </p>
+                
+                <!-- Trivia 4 -->
+                <div class="trivia-box">
+                    <span class="trivia-badge">
+                        豆知識：宇宙速度
+                    </span>
+                    <p class="mb-0 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                        万有引力の法則によれば、重力の強さは「距離の2乗に反比例」する。
+                        つまり、地球から2倍遠ざかると、重力は $\frac{1}{2}$ ではなく $\frac{1}{4}$ に弱まる。
+                        この「逆2乗の法則」は、光の明るさや音の大きさなど、物理現象の多くに見られる普遍的なルールであり、反比例の概念を3次元空間に拡張したものである。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="text-center py-24 bg-white rounded-3xl shadow-sm border border-slate-100 dark:bg-slate-900 dark:border-slate-800 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            <div class="h-1 bg-indigo-100 dark:bg-indigo-900/30 w-32 mx-auto mb-12 rounded-full"></div>
+            <h2 class="text-4xl font-black mb-10 text-slate-800 dark:text-slate-100 tracking-tight">調和する世界</h2>
+            <p class="text-xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto serif-text leading-loose px-4">
+                比例という直線の安心感と、<br>
+                反比例という曲線のダイナミズム。<br>
+                この二つの相関関係は、混沌とした世界に秩序を与え、<br>
+                複雑な現象をシンプルな数式へと翻訳してくれる。<br>
+                変数が織りなす対称性と調和の中に、<br>
+                私たちは宇宙の美しい法則性を垣間見ることができるのである。
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Quiz Panel -->
+    <div id="quizPanel" class="quiz-panel fixed top-0 right-0 h-full w-full md:w-[650px] bg-white shadow-2xl z-50 flex flex-col border-l border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+        <!-- Panel Header -->
+        <div class="p-8 border-b flex justify-between items-center bg-indigo-900 text-white shadow-md dark:bg-slate-950 dark:border-slate-800">
+            <div>
+                <h3 class="text-2xl font-bold flex items-center gap-3">
+                    Practice Problems
+                </h3>
+                <p class="text-xs text-indigo-200 mt-1 uppercase tracking-widest pl-0">Infinite Random Generator</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="generateBtn" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg border border-indigo-400 flex items-center gap-2 dark:bg-indigo-700 dark:hover:bg-indigo-600 dark:border-indigo-600 transform active:scale-95">
+                    <!-- Bootstrap Icon: shuffle -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.624 9.624 0 0 0 7.556 8a9.624 9.624 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.595 10.595 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.624 9.624 0 0 0 6.444 8a9.624 9.624 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z"/>
+                    </svg>
+                    問題を生成
+                </button>
+                <button id="closeQuiz" class="p-2.5 hover:bg-indigo-800 rounded-lg transition-colors text-indigo-200 hover:text-white">
+                    <!-- Bootstrap Icon: x-lg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Content Area -->
+        <div class="flex-1 overflow-y-auto p-8 bg-slate-50 dark:bg-slate-900 scrollbar-thin">
+            <div id="quizContainer" class="space-y-12">
+                <div class="text-center text-slate-500 dark:text-slate-400 py-32 flex flex-col items-center justify-center h-full">
+                    <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-full mb-8 animate-pulse">
+                        <!-- Bootstrap Icon: patch-check-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="text-indigo-400" viewBox="0 0 16 16">
+                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89-.01-.622-.636zM10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                    </div>
+                    <p class="text-2xl mb-3 font-bold text-slate-700 dark:text-slate-200">準備完了</p>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-xs mx-auto">右上の「問題を生成」ボタンを押して、<br>自動生成プログラムによる演習を開始してください。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-white py-24 text-center dark:bg-slate-950 dark:border-t dark:border-slate-800">
+        <p class="text-slate-500 mb-6 tracking-[0.4em] text-sm uppercase">Mathematical Archive Project</p>
+        <p class="text-sm opacity-40 serif-text italic max-w-md mx-auto leading-relaxed">
+            "Mathematics is the handwriting on the human consciousness of the very Spirit of Life itself."
+            <br>– Claude Bragdon
+        </p>
+    </footer>
+
+    <script>
+        // Global variables for the quiz
+        let currentQuestions = [];
+        
+        // --- 1. Math Render Logic ---
+        function renderMath() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        // --- 2. Problem Generation Algorithm (Proportion and Inverse Proportion) ---
+        function generateProportions() {
+            const problems = [];
+            
+            // Generate 10 random problems
+            for (let i = 0; i < 10; i++) {
+                const type = Math.random();
+                let questionText = "";
+                let targetVal = 0;
+                let explanation = "";
+                let unit = ""; 
+
+                if (type < 0.4) {
+                    // Type 1: Direct Proportion (Finding value)
+                    // y = ax. Given pair (x1, y1), find y2 for x2.
+                    const a = Math.floor(Math.random() * 8) + 2; // a = 2 to 9
+                    const x1 = Math.floor(Math.random() * 5) + 1;
+                    const y1 = a * x1;
+                    const x2 = Math.floor(Math.random() * 5) + 6; // different x
+                    const y2 = a * x2;
+
+                    questionText = `$y$ は $x$ に比例し、$x=${x1}$ のとき $y=${y1}$ です。<br>$x=${x2}$ のときの $y$ の値を求めなさい。`;
+                    targetVal = y2;
+                    explanation = `<strong>比例の式 $y=ax$ を使う</strong><br>
+                    まず比例定数 $a$ を求めます。<br>
+                    $a = \\frac{y}{x} = \\frac{${y1}}{${x1}} = ${a}$<br>
+                    したがって、式は $y = ${a}x$ です。<br>
+                    これに $x=${x2}$ を代入すると、<br>
+                    $y = ${a} \\times ${x2} = ${y2}$ となります。`;
+
+                } else if (type < 0.7) {
+                    // Type 2: Inverse Proportion (Finding value)
+                    // y = a/x. Given pair (x1, y1), find y2 for x2.
+                    // Need integer answers.
+                    const factors = [12, 18, 24, 30, 36, 48, 60];
+                    const a = factors[Math.floor(Math.random() * factors.length)];
+                    
+                    // Find divisors for x1
+                    let divisors = [];
+                    for(let k=1; k<=a; k++) if(a % k === 0) divisors.push(k);
+                    
+                    const x1 = divisors[Math.floor(Math.random() * divisors.length)];
+                    const y1 = a / x1;
+                    
+                    // Find another divisor for x2 that is different
+                    let x2 = x1;
+                    while(x2 === x1) {
+                         x2 = divisors[Math.floor(Math.random() * divisors.length)];
+                    }
+                    const y2 = a / x2;
+
+                    questionText = `$y$ は $x$ に反比例し、$x=${x1}$ のとき $y=${y1}$ です。<br>$x=${x2}$ のときの $y$ の値を求めなさい。`;
+                    targetVal = y2;
+                    explanation = `<strong>反比例の性質（積一定）を使う</strong><br>
+                    反比例では $x \\times y = a$ (一定) となります。<br>
+                    比例定数 $a = ${x1} \\times ${y1} = ${a}$<br>
+                    したがって、式は $y = \\frac{${a}}{x}$ です。<br>
+                    $x=${x2}$ のとき、$y = ${a} \\div ${x2} = ${y2}$ となります。`;
+
+                } else if (type < 0.85) {
+                    // Type 3: Identify Equation (Direct)
+                    const a = Math.floor(Math.random() * 5) + 2;
+                    const x = Math.floor(Math.random() * 4) + 2;
+                    const y = a * x;
+                    
+                    questionText = `$y$ が $x$ に比例し、$x=${x}$ のとき $y=${y}$ です。<br>このときの比例定数 $a$ を求めなさい。`;
+                    targetVal = a;
+                    explanation = `<strong>比例定数 = $\\frac{y}{x}$</strong><br>
+                    比例定数 $a = \\frac{${y}}{${x}} = ${a}$ です。<br>
+                    （式は $y = ${a}x$ となります）`;
+
+                } else {
+                    // Type 4: Word Problem (Inverse) - Gear or Work
+                    // Example: 歯車 (Gear)
+                    unit = "回転";
+                    const teethA = 20;
+                    const rotA = Math.floor(Math.random() * 5 + 2) * 10; // 20, 30...
+                    const constant = teethA * rotA;
+                    const teethB = [10, 25, 40, 50].filter(t => constant % t === 0)[0] || 10; // Ensure divisibility
+                    const rotB = constant / teethB;
+
+                    questionText = `歯数が${teethA}の歯車Aと、歯数が${teethB}の歯車Bが噛み合っています。<br>Aが${rotA}回転するとき、Bは何回転しますか？`;
+                    targetVal = rotB;
+                    explanation = `<strong>歯車は反比例の関係（歯数 $\\times$ 回転数 = 一定）</strong><br>
+                    全体の噛み合わせの数（定数）を求めます。<br>
+                    $${teethA} \\times ${rotA} = ${constant}$<br>
+                    これを歯車Bの歯数で割ります。<br>
+                    $${constant} \\div ${teethB} = ${rotB}$ 回転`;
+                }
+
+                problems.push({
+                    id: i + 1,
+                    text: questionText,
+                    val: targetVal,
+                    explanation: explanation,
+                    unit: unit
+                });
+            }
+            
+            return problems;
+        }
+
+        // --- 3. Rendering Quiz HTML ---
+        function generateQuizHTML() {
+            currentQuestions = generateProportions();
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = ''; // Clear
+
+            currentQuestions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-8 rounded-3xl border border-slate-200 shadow-sm transition-all hover:shadow-md dark:bg-slate-800 dark:border-slate-700 relative overflow-hidden";
+                
+                // Logic to show "応用問題" badge if unit exists (simple check)
+                const badgeHtml = q.unit ? `<span class="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">応用問題</span>` : '';
+                const displayUnit = q.unit || "";
+
+                card.innerHTML = `
+                    <div class="absolute top-0 left-0 w-2 h-full bg-indigo-500"></div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200 font-bold px-4 py-1.5 rounded-full text-sm tracking-wide">Q.${q.id}</span>
+                        ${badgeHtml}
+                    </div>
+                    <div class="text-slate-800 dark:text-slate-200 mb-8 text-lg leading-relaxed font-medium serif-text">
+                        ${q.text}
+                    </div>
+                    <div class="flex gap-4 items-center mb-6">
+                        <input type="number" id="q${q.id}-input" class="quiz-input w-full p-4 border-2 border-slate-200 rounded-2xl font-bold text-xl text-slate-700 placeholder-slate-300 dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100" placeholder="答えを入力" step="1">
+                        <span class="font-bold text-slate-400 text-xl whitespace-nowrap">${displayUnit}</span>
+                    </div>
+                    <button onclick="checkAnswer(${q.id})" class="group w-full bg-slate-800 text-white font-bold py-4 rounded-2xl hover:bg-slate-700 transition-all shadow-lg shadow-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 dark:shadow-none flex items-center justify-center gap-2">
+                        <span>答え合わせ</span>
+                        <!-- Bootstrap Icon: arrow-right-circle -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 16 16">
+                           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                        </svg>
+                    </button>
+                    
+                    <div id="q${q.id}-feedback" class="feedback-box bg-slate-100 dark:bg-slate-900/50"></div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Re-render MathJax/KaTeX for the new content
+            renderMath();
+        }
+
+        // --- 4. Validation Logic ---
+        function checkAnswer(qId) {
+            // qId is 1-based index
+            const data = currentQuestions[qId - 1];
+            const input = document.getElementById(`q${qId}-input`);
+            const feedback = document.getElementById(`q${qId}-feedback`);
+            const userVal = parseFloat(input.value);
+
+            feedback.style.display = 'block';
+            input.classList.remove('correct-answer', 'incorrect-answer');
+
+            // Allow small float tolerance if needed, though most generated problems are integers
+            if (Math.abs(userVal - data.val) < 0.01) {
+                // Correct
+                input.classList.add('correct-answer');
+                feedback.innerHTML = `
+                    <div class="text-green-700 dark:text-green-400 font-bold text-lg mb-3 flex items-center gap-2">
+                        <!-- Bootstrap Icon: check-circle-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        正解です！
+                    </div>
+                    <div class="mt-3 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-green-200 dark:border-green-800 text-slate-700 dark:text-slate-300 shadow-sm leading-relaxed">
+                        <strong class="text-green-800 dark:text-green-300 block mb-2 text-sm uppercase tracking-wider">Solution</strong>
+                        ${data.explanation}
+                    </div>
+                `;
+                feedback.className = "feedback-box bg-green-50 border border-green-200 dark:bg-green-900/20 dark:border-green-800";
+            } else {
+                // Incorrect
+                input.classList.add('incorrect-answer');
+                const displayUnit = data.unit || "";
+                
+                feedback.innerHTML = `
+                    <div class="text-red-700 dark:text-red-400 font-bold text-lg mb-3 flex items-center gap-2">
+                        <!-- Bootstrap Icon: x-circle-fill -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                        </svg>
+                        不正解です...
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 mb-4 text-sm">比例と反比例を混同していませんか？ $y=ax$ なのか $y=\\frac{a}{x}$ なのか確認しましょう。</p>
+                    <div class="pt-4 border-t border-red-200 dark:border-red-800">
+                        <button onclick="document.getElementById('reveal-${qId}').classList.remove('hidden')" class="text-red-600 dark:text-red-400 font-bold text-sm hover:text-red-800 dark:hover:text-red-300 underline decoration-2 underline-offset-4">
+                            答えと解説を見る
+                        </button>
+                        <div id="reveal-${qId}" class="hidden mt-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-red-200 dark:border-red-800 text-slate-700 dark:text-slate-300 shadow-sm leading-relaxed">
+                             <div class="mb-3 text-lg font-bold text-red-700 dark:text-red-400 border-b border-red-100 dark:border-red-900 pb-2">正解：${data.val} ${displayUnit}</div>
+                             <div class="text-sm">${data.explanation}</div>
+                        </div>
+                    </div>
+                `;
+                feedback.className = "feedback-box bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800";
+            }
+            renderMath(); // Re-render math in feedback
+        }
+
+        // --- 5. Event Listeners ---
+        const quizTrigger = document.getElementById('quizTrigger');
+        const quizPanel = document.getElementById('quizPanel');
+        const closeQuiz = document.getElementById('closeQuiz');
+        const generateBtn = document.getElementById('generateBtn');
+
+        quizTrigger.addEventListener('click', () => {
+            quizPanel.classList.add('active');
+            if (currentQuestions.length === 0) {
+                // Initial prompt is shown, user clicks generate
+            }
+        });
+
+        closeQuiz.addEventListener('click', () => {
+            quizPanel.classList.remove('active');
+        });
+
+        generateBtn.addEventListener('click', () => {
+            generateQuizHTML();
+            const container = document.getElementById('quizContainer');
+            if (container) container.scrollTop = 0;
+        });
+
+        // Initialize KaTeX on load
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMath();
+        });
+    </script>
+</body>
+</html>
